@@ -7,5 +7,8 @@ handlers:
 - url: /images
   static_dir: images
 
-- url: .*
+- url: /css
+  static_dir: css
+
+- url: /.*
   script: soschallenge.py

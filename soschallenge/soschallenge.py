@@ -19,10 +19,14 @@ import cgi
 import datetime
 import time
 import wsgiref.handlers
+import os
+import glob
+import random
 
 from google.appengine.ext import db
 from google.appengine.api import users
 from google.appengine.ext import webapp
+from google.appengine.ext.webapp import template
 
 class Quiz(db.Model):
   author = db.StringProperty()
@@ -32,12 +36,91 @@ class Quiz(db.Model):
   date = db.DateTimeProperty(auto_now_add=True)
 
 def retry(req):
+  template_values = {
+    }
+  path = os.path.join(os.path.dirname(__file__), 'templates','retry.html')
+  req.response.out.write(template.render(path, template_values))
+
+def end(req):
   req.response.out.write("""
-      <h1>답을 잘못입력했네요.</h1>
-    <a href="javascript:history.back()">답 다시 입력하기.</a>      
+      <h1>미션 완료.</h1>
     """)
 
 class MainPage(webapp.RequestHandler):
+
+  def __init__(self):
+    self.p_passcode = None
+    self.template_path = os.path.join(os.path.dirname(__file__), 'templates','index.html')
+    self.imagepath=os.path.join(os.path.dirname(__file__), 'images')
+    self.imagefiles = ["addList.gif","addVariable.gif",
+                    "allMotorsOff.gif","allMotorsOn.gif",
+                    "and.gif","answer.gif","append_toList_.gif",
+                    "backgroundIndex.gif", "bounceOffEdge.gif","broadcastHat.gif",
+                    "broadcast_.gif","changeGraphicEffect_by_.gif",
+                    "changePenHueBy_.gif","changePenShadeBy_.gif",
+                    "changePenSizeBy_.gif","changeSizeBy_.gif",
+                    "changeTempoBy_.gif","changeVolumeBy_.gif",
+                    "changeXposBy_.gif","changeYposBy_.gif",
+                    "clearPenTrails.gif","color_sees_.gif",
+                    "comeToFront.gif","computeFunction_of_.gif",
+                    "concatenate_with_.gif","contentsOfList_.gif",
+                    "costumeIndex.gif","deleteLine_ofList_.gif",
+                    "deleteList.gif","deleteVariable.gif",
+                    "distanceTo_.gif","divide.gif",
+                    "doAsk.gif","doBroadcastAndWait.gif",
+                    "doForever.gif","doForeverIf.gif",
+                    "doIf.gif","doIfElse.gif",
+                    "doPlaySoundAndWait.gif","doRepeat.gif",
+                    "doReturn.gif","doUntil.gif",
+                    "doWaitUntil.gif","drum_duration_elapsed_from_.gif",
+                    "equals.gif","filterReset.gif",
+                    "forward_.gif","getAttribute_of_.gif",
+                    "getLine_ofList_.gif","glideSecs_toX_y_elapsed_from_.g",
+                    "goBackByLayers_.gif","gotoSpriteOrMouse_.gif",
+                    "gotoX_y_.gif","greaterThan.gif",
+                    "heading.gif","heading_.gif",
+                    "hide.gif","hideVariable_.gif",
+                    "images","index.html",
+                    "insert_at_ofList_.gif","isLoud.gif",
+                    "keyHat.gif","keyPressed_.gif",
+                    "lessThan.gif","letter_of_.gif",
+                    "lineCountOfList_.gif","list_contains_.gif",
+                    "lookLike_.gif","midiInstrument_.gif",
+                    "minus.gif","mod.gif",
+                    "motorOnFor_elapsed_from_.gif","mousePressed.gif",
+                    "mouseX.gif","mouseY.gif",
+                    "mouseclickHat.gif","nextBackground.gif",
+                    "nextCostume.gif","not.gif",
+                    "noteOn_duration_elapsed_from_.g","or.gif",
+                    "penColor_.gif","penSize_.gif",
+                    "playSound_.gif","plus.gif",
+                    "pointTowards_.gif","putPenDown.gif",
+                    "putPenUp.gif","randomFrom_to_.gif",
+                    "rest_elapsed_from_.gif","rounded.gif",
+                    "say_.gif","say_duration_elapsed_from_.gif",
+                    "scale.gif","sensorPressed_.gif",
+                    "sensor_.gif","setGraphicEffect_to_.gif",
+                    "setLine_ofList_to_.gif","setMotorDirection_.gif",
+                    "setPenHueTo_.gif","setPenShadeTo_.gif",
+                    "setSizeTo_.gif","setTempoTo_.gif",
+                    "setVolumeTo_.gif","show.gif",
+                    "showBackground_.gif","showVariable_.gif",
+                    "soundLevel.gif","stampCostume.gif",
+                    "startHat.gif","startMotorPower_.gif",
+                    "stopAll.gif","stopAllSounds.gif",
+                    "stringLength_.gif","tempo.gif",
+                    "think_.gif","think_duration_elapsed_from_.gi",
+                    "timer.gif","timerReset.gif",
+                    "times.gif","touchingColor_.gif",
+                    "touching_.gif","turnLeft_.gif",
+                    "turnRight_.gif","variable.gif",
+                    "variableChangeBy.gif","variableSet.gif",
+                    "volume.gif","wait_elapsed_from_.gif",
+                    "xpos.gif","xpos_.gif",
+                    "ypos.gif","ypos_.gif"]
+
+    
+  
   def get(self):
     self.response.out.write("""
     <img src="http://piny.cc/_static/piny_slogan.png">
@@ -52,83 +135,71 @@ class MainPage(webapp.RequestHandler):
     <b> 문제</b>: 여러분의 이름은?
     </div>
     <br>
-          <form action="/p" method="post">
+          <form action="/" method="post">
             <div><input name="name" cols="60"></input></div>                      
-            <div><input type="hidden" name="level" value=1 cols="60"></input></div>
-            <div><input type="hidden" name="passcode" value=0 cols="60"></input></div>            
+            <div><input type="hidden" name="nextlevel" value=1 cols="60"></input></div>
+            <div><input type="hidden" name="passcode" value=0 cols="60"></input></div>
+            <div><input type="hidden" name="skipnext" value=True cols="60"></input></div>            
             <br/>
             <div><input type="submit" value="다음"></div>
           </form>
      """)
 #    goto_start(self)
 
-
-class p(webapp.RequestHandler):
-  def __init__(self):
-    self.p_passcode = None
-    
   def post(self):
-    _level = self.request.get('level').encode("utf-8")
-    _passcode = self.request.get('passcode')
+    _level = self.request.get('nextlevel').encode("utf-8")
+    _passcode = self.request.get('passcode').encode("utf-8")
+    isSkip = self.request.get('skipnext').encode("utf-8")    
 
     query = Quiz().all()
     if _level != '1':
       pquiz = query.filter('level =', str(int(_level)-1)).fetch(1)[0]
-      self.p_passcode = pquiz.level.encode('utf-8')
-    query = Quiz().all()      
-    quiz = query.filter('level =', _level).fetch(1)[0]
+      self.p_passcode = pquiz.passcode.encode('utf-8')
+
+    query = Quiz().all()
+    try:
+      quiz = query.filter('level =', _level).fetch(1)[0]
+    except IndexError:
+      end(self)
+      return
+
     content = quiz.content.encode('utf-8')
     level = quiz.level.encode('utf-8')
     passcode = quiz.passcode.encode('utf-8')
 
-    if _passcode  == '0' or  _passcode == self.p_passcode :
-      self.response.out.write(content)
-      self.response.out.write("""
-      <form action="/p" method="post">
-      <div><input name="passcode" cols="60"></input></div>      
-      <div><input type="hidden" name="level" value=%s cols="60"></input></div>
-      <br/>
-      <div><input type="submit" value="다음"></div>
-      </form>
-      """ % (str(int(level)+1)))
-      self.response.out.write("""
-      <a href="/">처음으로 </a>
-      """)
+#    print self.template_path
+#    print os.path.join(os.path.dirname(__file__), 'images')
+#    imagefiles = glob.glob(self.imagepath+os.sep+'*.gif')
+#    print imagefiles
+    imagefile = random.choice(self.imagefiles)
+    
 
+    if isSkip  == 'True' or  _passcode == self.p_passcode :
+      template_values = {
+        'headerimage' : imagefile,                
+        'level' : level,        
+        'content' : content,
+        'nextlevel' : str(int(level)+1)
+        }
+      self.response.out.write(template.render(self.template_path, template_values))      
       self.p_passcode = passcode
-#      self.response.out.write(self.p_passcode      )
     else:
       retry(self)
     
 
 class MakingQuiz(webapp.RequestHandler):
+  def __init__(self):
+    self.template_path = os.path.join(os.path.dirname(__file__), 'templates','admin.html')
+
+    
   def get(self):
     self.response.out.write('<html><body>')
     quizs = db.GqlQuery("SELECT * FROM Quiz ORDER BY level LIMIT 10")
+    template_values = {
+      'quizs' : quizs
+      }
+    self.response.out.write(template.render(self.template_path, template_values))      
 
-    for quiz in quizs:
-      content = quiz.content.encode('utf-8')
-      level = quiz.level.encode('utf-8')
-      passcode = quiz.passcode.encode('utf-8')            
-      self.response.out.write('<blockquote>level: %s passcode: %s content: %s</blockquote>' % (level, passcode, content ))
-      self.response.out.write("""
-      <form action="/admin/delete" method="post">
-      <input type="hidden" name="level" value="%s">
-      <div><input type="submit" value="지우기"></div>
-      </form>""" % level)
-
-      self.response.out.write('<hr><br/>')
-    
-    self.response.out.write("""
-    <form action="/admin" method="post">
-    <div>Level: <input name="level"></input></div>
-    <div>Passcode: <input name="passcode"></input></div>        
-    <div>Content <textarea name="content" rows="10" cols="60"> <h1>1단계 </h1> </textarea></div>
-    <div><input type="submit" value="문제내기"></div>
-    </form>
-    </body>
-    </html>""")
-    
   def post(self):
     quiz = Quiz()
     quiz.content = self.request.get('content')
@@ -148,9 +219,9 @@ class DeleteQuiz(webapp.RequestHandler):
 
 application = webapp.WSGIApplication([
   ('/', MainPage),
-  ('/p', p),
   ('/admin', MakingQuiz),
-  ('/admin/delete', DeleteQuiz),              
+  ('/admin/save', MakingQuiz),  
+  ('/admin/delete', DeleteQuiz),
 ], debug=True)
 
 

@@ -1,0 +1,24 @@
+
+
+      content = quiz.content.encode('utf-8')
+      level = quiz.level.encode('utf-8')
+      passcode = quiz.passcode.encode('utf-8')
+      self.response.out.write('<pre>level: %s passcode: %s %s</pre>' % (level, passcode, content ))      
+      self.response.out.write('<textarea rows=4 cols=40>level: %s passcode: %s content: %s</textarea>' % (level, passcode, content ))
+      self.response.out.write("""
+      <form action="/admin/delete" method="post">
+      <input type="hidden" name="level" value="%s">
+      <div><input type="submit" value="지우기"></div>
+      </form>""" % level)
+
+      self.response.out.write('<hr><br/>')
+    
+    self.response.out.write("""
+    <form action="/admin" method="post">
+    <div>Level: <input name="level"></input></div>
+    <div>Passcode: <input name="passcode"></input></div>        
+    <div>Content <textarea name="content" rows="20" cols="70"> <h1>1단계 </h1> </textarea></div>
+    <div><input type="submit" value="문제내기"></div>
+    </form>
+    </body>
+    </html>""")

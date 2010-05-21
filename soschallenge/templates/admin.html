@@ -1,0 +1,102 @@
+<html>
+  <head>
+	<link charset="utf-8" media="all" type="text/css"
+		  href="css/quiz.css" rel="stylesheet">
+	<script charset="iso-8859-1" language="javascript" type="text/javascript" src="http://cleanupdata.com/js/jquery.js"></script>
+</head>
+  <body>
+	<div id='globalBox'>
+
+<div id="header">
+<h1>
+			<a href="http://piny.cc.com/">
+			<img height="50" border="0" alt="PINY" src="http://piny.cc/_static/piny_slogan.png" id="dabbleLogo">
+			</a>
+			<a class="homeLink"
+			href="http://soschallenge.appspot.com/">스크래치/문제은행</a> <small><em>{</em><strong>퀴즈를
+			풀면서 스크래치를 배웁시다. </strong><em>}</em>
+			&nbsp;&nbsp;&nbsp; 문의
+			<a href="mailto:piny@piny.cc" </a></small>
+			   <br/>
+		</h1>
+
+
+</center>				
+</div>
+
+<div class="tabBox">
+			<ul class="tabs">
+				<li id="inputLink"><a href="./">문제</a></li>
+				<li id="editLink"><a onclick="document.forms[0].action=this.href; document.forms[0].submit(); return false" href="./admin">Admin</a></li>
+			</ul>
+		</div>
+
+<div class='fieldBox'>
+    <form action="/admin/save" method="post">
+      <p><label>단계</label> <input  name="level"></input></p>
+      <p><label>답</label> <input name="passcode"></input>  <input type="submit" value="문제내기"></p>
+    <p><label>문제</label> <textarea name="content" rows="10" cols="90"> </textarea></p>
+    </form>
+</div>
+
+    {% for quiz in quizs %}
+
+	  <div class='fieldBox'>
+	  <h2>{{ quiz.level }} 단계 문제 </h2>
+	  <p> 답: {{ quiz.passcode }} </p>
+	  <div>
+      <form action="/admin/delete" method="post">
+		<input type="hidden" name="level" value={{ quiz.level }} >
+      <input type="submit" value="문항 삭제">
+      </form>
+	  </div>
+
+	  <div style="display: none">
+      <form action="/admin/save" method="post">
+		<input type="hidden" name="level" value={{ quiz.level }} >
+		<input type="hidden" name="passcode" value={{ quiz.passcode }} >
+		<textarea name="content" rows="10" cols="90"> </textarea>
+		<input type="submit" value="저장">
+      </form>
+	  </div>
+
+	  <a id="openQuizLink{{quiz.level}}" href="#">문제 수정</a> - 
+	  <a id="openQuizLink{{quiz.level}}" href="#{{quiz.level }}">문제 보기</a>
+      </form>
+
+
+      <blockquote>{{ quiz.content|escape }}</blockquote> 
+
+	  <div id="quizBox" style="display: none">
+		<div id="quizToolbar"><input class="button"
+		id="closeQuizButton" type="button" value="Close Quiz" /></div>
+		<div class="quiz" id="{{quiz.level}}">
+		  {{ quiz.content }}
+		</div>
+	  </div>
+
+	  <script type="text/javascript" language="javascript" charset="iso-8859-1">
+		// <![CDATA[
+
+      var Quiz = {
+      show: function() {
+		$('#quizBox').fadeIn('fast', function() { $('#{{quiz.level}}').show('fast'); });
+      },
+      hide: function() {
+		$('#{{ quiz.level }}').hide('fast', function() { $('#quizBox').fadeOut('fast'); });
+	}
+};
+
+$(function () {
+	$('#openQuizLink{{quiz.level}}').click(Quiz.show);
+	$('#closeQuizButton').click(Quiz.hide);
+});
+
+// ]]>
+</script>
+	  </div>
+
+    {% endfor %}
+
+</body>
+</html>

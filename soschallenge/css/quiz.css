@@ -1,0 +1,383 @@
+body {
+font-size:14px;
+background-color:#393737;
+margin:0;
+padding:0;
+}
+* {
+font-family: "NanumGothic", "Apple Gothic", "UnGothic", "Malgun Gothic", sans-serif;
+
+}
+input, textarea {
+font-size:1em;
+}
+h1, h2, h3, h4, h5, h6, th, em {
+font-family:Corbel,Calibri,"GillSans-LightItalic","Gill Sans Light Italic","Gill Sans","Gill Sans MT","Trebuchet MS";
+font-style:italic;
+font-weight:normal;
+}
+h1, h2, h3, h4, h5, h6 {
+margin:0;
+}
+p, ul, ol {
+margin:0 0 1em;
+}
+a:link, a:visited {
+color:#285E7C;
+}
+a.contactLink:link, a.contactLink:visited, a.homeLink:link, a.homeLink:visited {
+color:white;
+}
+a.homeLink {
+text-decoration:none;
+}
+a.homeLink:hover {
+color:#DFD2E7;
+}
+#globalBox {
+background-color:#ABB0A9;
+margin:0 2em 2em;
+}
+#mainBox {
+padding:1.5em 1em 1em;
+}
+h1, a:hover #dabbleLogo {
+background:none repeat scroll 0 0 #FFA314;
+}
+h1 {
+color:white;
+font-size:3em;
+font-weight:bold;
+line-height:0.7em;
+padding:1.5em 0 0 1em;
+position:relative;
+}
+h1 small {
+color:#EA9592;
+font-size:0.5em;
+line-height:0.7em;
+}
+h1 em {
+color:#B5A9F8;
+}
+h1 strong {
+color:#E4E0FC;
+font-weight:normal;
+}
+#dabbleLogo {
+background-color:#595556;
+bottom:-18px;
+padding:10px 15px;
+position:absolute;
+right:0.5em;
+z-index:1;
+}
+.tabBox {
+background-color:#595556;
+}
+.tabs {
+height:0.5em;
+margin:0;
+padding:1em 1em 0.5em;
+}
+.tabs li {
+display:block;
+float:left;
+list-style-type:none;
+position:relative;
+}
+.tabs a:link, .tabs a:visited {
+background-color:#6E716C;
+color:white;
+display:block;
+letter-spacing:0.2em;
+padding:0.2em 1em 0.2em 1.75em;
+text-decoration:none;
+text-transform:uppercase;
+}
+#inputPage #editLink, #inputPage #outputLink, #editPage #outputLink {
+display:none;
+}
+#editPage #inputLink a:link, #editPage #inputLink a:visited, #outputPage #editLink a:link, #outputPage #editLink a:visited {
+background-color:#898D87;
+}
+#outputPage #inputLink a:link, #outputPage #inputLink a:visited {
+background-color:#C2C6BF;
+}
+.tabs a:hover {
+background-color:#434542 !important;
+}
+#inputLink {
+z-index:3;
+}
+#inputLink a {
+padding-left:1em;
+}
+#editLink {
+margin-left:-0.5em;
+z-index:2;
+}
+#outputLink {
+margin-left:-0.5em;
+z-index:1;
+}
+.boxHeader {
+background-color:#90948E;
+color:white;
+display:inline;
+font-size:1em;
+margin:0 0 0 1em;
+padding:0 0.5em;
+}
+.uploadFileBox, .sampleDataBox, .helpBox {
+clear:left;
+float:left;
+width:20em;
+}
+.pasteDataBox {
+margin-left:21em;
+}
+.fieldBox {
+background-color:#E9E4E5;
+border-color:#90948E;
+border-style:solid;
+border-width:0.25em 0 0;
+margin-bottom:1em;
+padding:1em;
+position:relative;
+}
+#uploadFile, #pasteData, input.text {
+background-color:white;
+border-color:#BEC3BC;
+border-style:solid;
+border-width:1px 0 0 1px;
+}
+input.unchanged, textarea.unchanged {
+color:#90948E;
+}
+#uploadFile {
+font-size:0.75em;
+margin-bottom:1.25em;
+padding:0.5em;
+width:23em;
+}
+#pasteData {
+margin:0 0 1em;
+padding:0.75em 0.5em;
+width:97%;
+}
+#pasteData, #columnInputTable td, .columnValue, #columnPreviewTable td, .columnPreviewTable td {
+font-family:Monaco,"Arial Unicode MS",Tahoma,"Microsoft Sans Serif","Lucida Sans Unicode",Consolas,"Palatino Linotype",Sylfaen;
+font-size:1em;
+}
+#pasteDataSubmit {
+position:absolute;
+right:1em;
+top:0.75em;
+z-index:1;
+}
+.tableOverflowBox {
+margin:0 0 1em;
+max-height:15em;
+overflow:auto;
+padding-bottom:1px;
+}
+table {
+border-collapse:collapse;
+border-color:#BEC3BC;
+border-spacing:0;
+border-style:solid;
+border-width:0 1px 0 0;
+}
+th, td {
+border-color:#BEC3BC;
+border-style:solid;
+border-width:1px 0 1px 1px;
+padding:0.2em 0.4em;
+}
+#columnInputTable, #columnPreviewTable, .columnPreviewTable {
+font-size:0.78125em;
+}
+#columnPreviewTable, .columnPreviewTable {
+margin-bottom:-1px;
+}
+#columnInputTable th {
+border-width:0 0 0 1px;
+font-size:1.0833em;
+text-align:right;
+}
+#inputHeaderValues .insertedColumn, #inputFromValues .insertedColumn {
+border-left-width:0 !important;
+}
+.headerValues th {
+background-color:#D1D6CE;
+border-color:#A6AAA4;
+padding:0.3em 2px 0.1em;
+text-align:left !important;
+}
+#columnInputTable .fromValues td {
+padding:0.2em 2px;
+}
+#columnInputTable .toValues td {
+padding:0;
+}
+input.columnValue {
+border:0 none;
+line-height:1.5em;
+margin:0;
+padding:0.2em 2px;
+width:5em;
+}
+#columnInputTable td.deletedColumn {
+background-color:transparent !important;
+}
+.deletedColumn input.columnValue {
+display:none;
+}
+.columnValue:focus {
+background-color:#FFFED1;
+}
+#columnInputTable th.deletedColumn, #columnInputTable .fromValues td, .faint {
+color:#61635F;
+}
+.insertColumnLinks td {
+border-width:0;
+padding:0;
+text-align:center;
+}
+.insertColumnLinks a {
+height:16px;
+}
+.insertColumnLinks img {
+border:0 none;
+opacity:0.6;
+}
+.deleteColumnButton, .insertAfterColumnButton {
+visibility:hidden;
+}
+.insertColumnLinks a:hover img {
+opacity:1;
+}
+.hovering, .focused {
+visibility:visible;
+}
+.deleteColumnButton {
+margin-left:20px;
+}
+.insertAfterColumnButton {
+float:right;
+position:relative;
+right:-9px;
+}
+.columnValueTools {
+font-size:0.75em;
+margin:-1em 0 1em;
+}
+.clear {
+clear:both;
+height:0;
+overflow:hidden;
+}
+#dabbleLogo {
+-moz-border-radius:10px 10px 10px 10px;
+}
+.boxHeader {
+-moz-border-radius-topleft:6px;
+-moz-border-radius-topright:6px;
+}
+.tabs a {
+-moz-border-radius-bottomright:10px;
+-moz-border-radius-topright:10px;
+}
+#previewStatus p {
+margin-top:1em;
+}
+#previewSpinner {
+padding-left:5px;
+vertical-align:middle;
+}
+#videoStillBox {
+margin:0 0 0.5em;
+position:relative;
+}
+#videoStillBox a {
+background-color:#393737;
+border:3px solid #CF3631;
+display:block;
+text-decoration:none;
+width:285px;
+}
+#videoStillBox img {
+border:0 none;
+opacity:0.75;
+}
+#videoStillBox a:hover img {
+opacity:1;
+}
+.videoStillCaption {
+background-color:#595556;
+bottom:0;
+color:white;
+display:block;
+font-size:0.75em;
+left:0;
+letter-spacing:0.1em;
+opacity:0.8;
+padding:5px 10px;
+position:absolute;
+text-align:center;
+text-transform:uppercase;
+width:270px;
+}
+#videoStillBox a:hover .videoStillCaption {
+background-color:#393737;
+}
+#quizBox {
+background-image:url("http://cleanupdata.com/img/video-bg.png");
+height:100%;
+left:0;
+overflow:auto;
+position:fixed;
+text-align:center;
+top:0;
+width:100%;
+z-index:50;
+}
+#quizToolbar {
+background-color:#595556;
+margin:0 auto;
+padding:0.25em 10px;
+width:700px;
+}
+#quizToolbar input.button {
+font-size:0.75em;
+}
+
+.quiz {
+background-color:#ffffff;
+border-color:#595556;
+border-style:solid;
+border-width:0 10px 10px;
+margin:0 auto;
+overflow:auto;
+width:700px;
+}
+
+.error {
+color:#B8201D;
+font-weight:bold;
+}
+
+label
+{
+width: 4em;
+float: left;
+text-align: right;
+margin-right: 0.5em;
+display: block
+}
+
+.submit input
+{
+margin-left: 4.5em;
+} 
