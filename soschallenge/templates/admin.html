@@ -33,39 +33,35 @@
 
 <div class='fieldBox'>
     <form action="/admin/save" method="post">
-      <p><label>단계</label> <input  name="level"></input></p>
-      <p><label>답</label> <input name="passcode"></input>  <input type="submit" value="문제내기"></p>
-    <p><label>문제</label> <textarea name="content" rows="10" cols="90"> </textarea></p>
+	  <p></p>
+      <p>단계 <input name="level"></input></p>
+      <p>제목 <input name="subject" style="width: 400px;" > </input> </p>
+      <p>정답 <input name="passcode"></input> </p>
+    <p>내용 <textarea name="content" rows="10" cols="90"> </textarea></p>
+	<p><input type="submit" value="문제내기"></p>
     </form>
 </div>
 
     {% for quiz in quizs %}
-
 	  <div class='fieldBox'>
-	  <h2>{{ quiz.level }} 단계 문제 </h2>
-	  <p> 답: {{ quiz.passcode }} </p>
+		<form action="/admin/delete" method="post">
+		<span >{{ quiz.level }} 단계 
+		<input type="hidden" name="level" value={{ quiz.level }} >
+		<input type="submit" value="문항 삭제">
+		</span>     
+		</form>
+
 	  <div>
-      <form action="/admin/delete" method="post">
-		<input type="hidden" name="level" value={{ quiz.level }} >
-      <input type="submit" value="문항 삭제">
-      </form>
+      <form action="/admin/modify" method="post">
+		<p><input type="hidden" name="level" value="{{ quiz.level }}" > </p>
+		<p>제목 <input name="subject" style="width: 400px;" value="{{ quiz.subject }}"> </input>
+		  정답<input name="passcode" value=" {{ quiz.passcode }}"> </input>
+		<p>내용<textarea name="content" rows="10" cols="90">{{quiz.content|escape}} </textarea></p>
+        <p><input type="submit" value="수정내용 저장"></p>
+		</form>
 	  </div>
 
-	  <div style="display: none">
-      <form action="/admin/save" method="post">
-		<input type="hidden" name="level" value={{ quiz.level }} >
-		<input type="hidden" name="passcode" value={{ quiz.passcode }} >
-		<textarea name="content" rows="10" cols="90"> </textarea>
-		<input type="submit" value="저장">
-      </form>
-	  </div>
-
-	  <a id="openQuizLink{{quiz.level}}" href="#">문제 수정</a> - 
 	  <a id="openQuizLink{{quiz.level}}" href="#{{quiz.level }}">문제 보기</a>
-      </form>
-
-
-      <blockquote>{{ quiz.content|escape }}</blockquote> 
 
 	  <div id="quizBox" style="display: none">
 		<div id="quizToolbar"><input class="button"

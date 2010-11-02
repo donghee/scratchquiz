@@ -1,6 +1,7 @@
 body {
 font-size:14px;
-background-color:#393737;
+Background-color:#FF7F27;
+/* background-color:#393737; */
 margin:0;
 padding:0;
 }
@@ -13,14 +14,17 @@ font-size:1em;
 }
 h1, h2, h3, h4, h5, h6, th, em {
 font-family:Corbel,Calibri,"GillSans-LightItalic","Gill Sans Light Italic","Gill Sans","Gill Sans MT","Trebuchet MS";
-font-style:italic;
-font-weight:normal;
+/*font-style:italic;*/
+/*font-weight:normal;*/
 }
 h1, h2, h3, h4, h5, h6 {
 margin:0;
 }
 p, ul, ol {
 margin:0 0 1em;
+}
+p {
+line-height:1.6em;
 }
 a:link, a:visited {
 color:#285E7C;
@@ -35,7 +39,7 @@ a.homeLink:hover {
 color:#DFD2E7;
 }
 #globalBox {
-background-color:#ABB0A9;
+/* background-color:#ABB0A9; */
 margin:0 2em 2em;
 }
 #mainBox {
@@ -110,8 +114,11 @@ background-color:#434542 !important;
 #inputLink {
 z-index:3;
 }
-#inputLink a {
+#editLink a , #inputLink a {
+font-weight:bold;
 padding-left:1em;
+padding-top:0.5em;
+padding-bottom:0.5em;
 }
 #editLink {
 margin-left:-0.5em;

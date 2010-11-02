@@ -31,7 +31,23 @@ def set_prefs(prefs):
     # separating folders regardless of the platform rope is running on.
     # 'src/my_source_folder' for instance.
     #prefs.add('source_folders', 'src')
+    import os
+    
+    GAE_PATH = "C:\\Program Files\\Google\\google_appengine"
 
+    EXTRA_PATHS = [
+        GAE_PATH,
+        os.path.join(GAE_PATH, 'lib', 'antlr3'),
+        os.path.join(GAE_PATH, 'lib', 'django'),
+        os.path.join(GAE_PATH, 'lib', 'ipaddr'),
+        os.path.join(GAE_PATH, 'lib', 'webob'),
+        os.path.join(GAE_PATH, 'lib', 'yaml', 'lib'),
+        ]
+    SCRIPT_DIR = os.path.join(GAE_PATH, 'google', 'appengine', 'tools')
+    
+    for path in EXTRA_PATHS + [SCRIPT_DIR]:
+        prefs.add('python_path', path)
+    
     # You can extend python path for looking up modules
     #prefs.add('python_path', '~/python/')
 

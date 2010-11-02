@@ -1,0 +1,49 @@
+<html>
+  <head>
+	<link charset="utf-8" media="all" type="text/css"
+		  href="css/quiz.css" rel="stylesheet">
+	<script charset="iso-8859-1" language="javascript" type="text/javascript" src="http://cleanupdata.com/js/jquery.js"></script>
+</head>
+  <body>
+	<div id='globalBox'>
+
+<div id="header">
+	<h1 style='background: url("images/header.png") no-repeat scroll center top transparent;'> {{ level }} 단계 </h1>
+
+</center>				
+</div>
+
+<div class="tabBox">
+			<ul class="tabs">
+				<li id="inputLink"><a href="javascript:history.back()">이전 문제</a></li>
+				<li id="editLink"><a onclick=""	href="./">처음으로</a></li>
+				<!-- <li id="editLink"><a onclick="" href="./admin">힌트</a></li> -->
+			</ul>
+		</div>
+
+<div class='fieldBox'>
+	<br>
+	<h2> {{ subject }} </h2>
+	<br>
+	{{ content }}
+	<br>
+	<br>
+      <form action="/" method="post">
+      <p><label>답:</label><input name="passcode" cols="60"></input></p>      
+      <p><input type="hidden" name="level" value={{ level }} cols="60"></input></p>
+      <p><input type="submit" value="다음 문제"></p>
+      </form>
+
+</div>
+
+<div>
+<center>
+<h2> 타일 도움말 </h2>
+<br>
+<img src="images/{{ headerimage }}">
+</center>
+<br>
+</div>
+  </body>
+</html>
+
